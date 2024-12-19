@@ -8,5 +8,11 @@ namespace NhanSu.Controllers
         {
             return View();
         }
+
+        public IActionResult Details()
+        {
+            return View();
+        }
+        
     }
 }

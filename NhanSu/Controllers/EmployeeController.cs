@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using NhanSu.Models;
 using NhanSu.Data;
 using System.Linq;
@@ -7,7 +8,7 @@ namespace NhanSu.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+     public class EmployeeController : ControllerBase
     {
         private readonly NhanSuContext _context;
 
@@ -126,5 +127,34 @@ namespace NhanSu.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
+
+        // GET: api/Employee/Details/5
+        [HttpGet("Details/{id}")]
+         public IActionResult Details(int id)
+        {
+            var employees = _context.Employees
+                .Where(e => !e.DaXoa && e.Id == id)
+                .Select(e => new
+                {
+                    e.Id,
+                    e.HoTen,
+                    e.ChucVu,
+                    e.NgaySinh,
+                    e.Email,
+                    e.TrangThai
+                })
+                .FirstOrDefault();
+
+            if (employees == null)
+            {
+                return NotFound("Không tìm thấy nhân viên.");
+            }
+
+            return Ok(employees);
+        }
+
+        
+
     }
 }

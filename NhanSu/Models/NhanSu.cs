@@ -27,5 +27,12 @@ namespace NhanSu.Models
 
         // Đánh dấu đã xóa: true - đã xóa, false - chưa xóa
         public bool DaXoa { get; set; } = false;
+        // Constructor để gắn giá trị mặc định
+        public Employee()
+        {
+            TrangThai = true; // Mặc định là đang làm
+            DaXoa = false;    // Mặc định chưa bị xóa
+            NgayTao = DateTime.Now; // Gắn giá trị hiện tại cho NgayTao
+        }
     }
 }

@@ -71,7 +71,24 @@ $('#btnAddEmployee').click(function () {
     $('#chucVu').val('');
     $('#ngaySinh').val('');
     $('#email').val('');
+    // Ẩn dropdown trạng thái khi tạo mới
+    $('#trangThai').closest('.mb-3').hide();
     $('#employeeModal').modal('show');
+});
+// Lắng nghe phím tắt Ctrl + N
+$(document).on('keydown', function (event) {
+    // Kiểm tra nếu Ctrl + N được nhấn
+    if (event.ctrlKey && event.key === 'n') {
+        event.preventDefault(); // Ngăn hành vi mặc định (mở tab mới trên trình duyệt)
+        $('#btnAddEmployee').click(); // Gọi sự kiện click để mở form tạo mới
+    }
+});
+// Xử lý sự kiện Enter trên modal
+$('#employeeModal').on('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Ngăn hành vi mặc định (nếu có)
+        $('#btnSaveEmployee').click(); // Kích hoạt sự kiện click nút "Lưu"
+    }
 });
 
 // Lưu nhân viên
@@ -103,7 +120,8 @@ $('#btnSaveEmployee').click(function () {
                 chucVu: $('#chucVu').val(),
                 ngaySinh: $('#ngaySinh').val(),
                 email: $('#email').val(),
-                trangThai: true
+                //trangThai: true
+                trangThai: $('#trangThai').val() === "1", // Chuyển đổi chuỗi "1"/"0" thành Boolean
             };
 
             if (!employee.hoTen || !employee.chucVu || !employee.ngaySinh) {
@@ -153,15 +171,26 @@ $('#btnSaveEmployee').click(function () {
 });
 
 // Sửa nhân viên
+// Sửa nhân viên
 $('#employeeTable').on('click', '.btnEdit', function () {
-    const id = $(this).data('id');
+    const id = $(this).data('id'); // Lấy ID của nhân viên từ thuộc tính data-id
     $.getJSON(`/api/Employee/${id}`, function (e) {
+        // Gán các giá trị vào form modal từ dữ liệu trả về
         $('#employeeId').val(e.id);
         $('#hoTen').val(e.hoTen);
         $('#chucVu').val(e.chucVu);
-        $('#ngaySinh').val(e.ngaySinh.split('T')[0]);
+        $('#ngaySinh').val(e.ngaySinh.split('T')[0]); // Chuyển định dạng ngày về YYYY-MM-DD
         $('#email').val(e.email);
+
+        // Sử dụng giá trị trả về từ API để đặt trạng thái
+        $('#trangThai').val(e.trangThai ? 1 : 0);
+        // Hiện dropdown trạng thái khi sửa
+        $('#trangThai').closest('.mb-3').show();
+        // Hiển thị modal để sửa nhân viên
         $('#employeeModal').modal('show');
+    }).fail(function (xhr) {
+        // Xử lý lỗi nếu không tìm thấy dữ liệu hoặc lỗi từ API
+        alert(`Lỗi khi tải dữ liệu nhân viên: ${xhr.responseText}`);
     });
 });
 

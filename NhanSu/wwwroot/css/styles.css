@@ -1,9 +1,263 @@
-﻿body {
-    body
-
-{
-    font-family: Arial, sans-serif;
+﻿/* General Body Styling */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
     background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #343a40;
 }
 
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề */
+h1 {
+    font-weight: 700;
+    color: #1a73e8;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+/* Responsive Bảng */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* Bảng danh sách nhân viên */
+#employeeTable {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-collapse: collapse;
+}
+
+#employeeTable thead {
+    background-color: #1a73e8;
+    color: white;
+    font-weight: bold;
+}
+
+#employeeTable thead th {
+    padding: 12px;
+    text-align: center;
+    font-size: 1rem;
+    border-bottom: 2px solid #f1f3f4;
+}
+
+#employeeTable tbody tr:hover {
+    background-color: #f1f3f4;
+    cursor: pointer;
+}
+
+#employeeTable tbody td {
+    padding: 12px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Cột trạng thái */
+#employeeTable tbody td:nth-child(6) {
+    font-weight: bold;
+}
+
+#employeeTable tbody td:nth-child(6):contains("Đang làm") {
+    color: green;
+}
+
+#employeeTable tbody td:nth-child(6):contains("Đã nghỉ") {
+    color: red;
+}
+
+/* Thanh công cụ */
+.d-flex {
+    gap: 10px;
+}
+
+.d-flex button {
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.d-flex button:hover {
+    transform: scale(1.05);
+}
+
+/* Nút "Thêm mới" */
+.btn-primary {
+    background-color: #1a73e8;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #155bb5;
+}
+
+/* Nút "Xuất Excel" */
+.btn-success {
+    background-color: #34a853;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #2b8c3b;
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    background-color: #1a73e8;
+    color: white;
+    font-weight: bold;
+    border-bottom: none;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+}
+
+.modal-body label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.modal-body input,
+.modal-body select {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    font-size: 16px;
+    color: #495057;
+    width: 100%;
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+}
+
+.modal-body input:focus,
+.modal-body select:focus {
+    border-color: #1a73e8;
+    outline: none;
+}
+
+/* Nút trong Modal */
+.modal-footer button {
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: all 0.3s;
+    border: none;
+}
+
+/* Nút Lưu */
+#btnSaveEmployee {
+    background-color: #1a73e8;
+    color: white;
+}
+
+#btnSaveEmployee:hover {
+    background-color: #155bb5;
+}
+
+/* Nút Đóng */
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Modal Chi Tiết */
+#employeeDetailModal .modal-header {
+    background-color: #1a73e8;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#employeeDetailModal .modal-body p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+#employeeDetailModal .modal-body strong {
+    color: #1a73e8;
+}
+
+/* DataTables Customization */
+.dataTables_wrapper {
+    margin-top: 20px;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 5px;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: #1a73e8;
+    outline: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+    background-color: #f1f3f4;
+    color: #495057;
+    transition: all 0.3s;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #1a73e8;
+    color: white;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #1a73e8;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .d-flex button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    #employeeTable thead th,
+    #employeeTable tbody td {
+        font-size: 0.8rem;
+    }
+
+    #employeeTable tbody td {
+        padding: 8px;
+    }
 }
