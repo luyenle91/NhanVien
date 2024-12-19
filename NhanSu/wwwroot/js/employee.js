@@ -47,6 +47,7 @@ function loadEmployees(callback) {
                     return `
                         <button class="btn btn-warning btn-sm btnEdit" data-id="${id}">Sửa</button>
                         <button class="btn btn-danger btn-sm btnDelete" data-id="${id}">Xóa</button>
+                       <button class="btn btn-danger btn-sm btnDetail" data-id="${id}">Chi tiết</button>
                     `;
                 }
             }
@@ -192,6 +193,49 @@ $('#btnExportExcel').click(function () {
         XLSX.utils.book_append_sheet(workbook, worksheet, "DanhSachNhanVien");
         XLSX.writeFile(workbook, "DanhSachNhanVien.xlsx");
     });
+});
+// Xem chi tiết nhân viên
+$('#employeeTable').on('click', '.btnDetail', function () {
+    const id = $(this).data('id');
+    $.getJSON(`/api/Employee/Details/${id}`, function (data) {
+        $('#detailHoTen').text(data.hoTen);
+        $('#detailChucVu').text(data.chucVu);
+        $('#detailNgaySinh').text(new Date(data.ngaySinh).toLocaleDateString());
+        $('#detailEmail').text(data.email);
+        $('#detailTrangThai').text(data.trangThai ? 'Đang làm' : 'Đã nghỉ');
+        $('#employeeDetailModal').modal('show');
+    });
+});
+
+// Hiển thị chi tiết nhân viên khi bấm vào dòng trong bảng, trừ các hành động
+$('#employeeTable').on('click', 'tr', function (event) {
+    // Kiểm tra nếu click vào các nút hành động thì không thực hiện
+    if ($(event.target).closest('.btnEdit, .btnDelete, .btnDetail').length > 0) {
+        return;
+    }
+
+    const id = $(this).find('.btnDetail').data('id');
+    if (id) {
+        showEmployeeDetails(id);
+    }
+});
+
+// Hàm hiển thị chi tiết nhân viên
+function showEmployeeDetails(id) {
+    $.getJSON(`/api/Employee/Details/${id}`, function (data) {
+        $('#detailHoTen').text(data.hoTen);
+        $('#detailChucVu').text(data.chucVu);
+        $('#detailNgaySinh').text(new Date(data.ngaySinh).toLocaleDateString());
+        $('#detailEmail').text(data.email);
+        $('#detailTrangThai').text(data.trangThai ? 'Đang làm' : 'Đã nghỉ');
+        $('#employeeDetailModal').modal('show');
+    });
+}
+
+// Xem chi tiết nhân viên dạng chi tiết cho Details.cshtml-chưa chạy ok
+$('#employeeTable').on('click', '.btnDetailView', function () {
+    const id = $(this).data('id');
+    window.location.href = `/Employees/Details/${id}`;
 });
 
 // Tải danh sách khi trang được load
